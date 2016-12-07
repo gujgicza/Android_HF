@@ -1,4 +1,9 @@
 <resources>
-    <string name="app_name">Leckefuzet</string>
+    <string name="app_name">Leckefüzet</string>
     <string name="action_settings">Settings</string>
+    <string name="name">Kategória neve</string>
+    <string name="description">Leírás</string>
+    <string name="new_category_item">Új kategória</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Visszavonás</string>
 </resources>
