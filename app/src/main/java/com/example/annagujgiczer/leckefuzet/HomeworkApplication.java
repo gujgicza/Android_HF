@@ -7,4 +7,5 @@ import com.orm.SugarApp;
  */
 
 public class HomeworkApplication extends SugarApp {
+
 }

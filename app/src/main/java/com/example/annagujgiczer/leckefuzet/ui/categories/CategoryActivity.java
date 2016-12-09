@@ -1,9 +1,9 @@
-package com.example.annagujgiczer.leckefuzet;
+package com.example.annagujgiczer.leckefuzet.ui.categories;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,9 +12,13 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.example.annagujgiczer.leckefuzet.model.categories.CategoryItem;
+import com.example.annagujgiczer.leckefuzet.R;
+import com.example.annagujgiczer.leckefuzet.ui.todos.TodoActivity;
+
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity
+public class CategoryActivity extends AppCompatActivity
         implements NewCategoryItemDialogFragment.INewCategoryItemDialogListener {
 
     private RecyclerView recyclerView;
@@ -23,10 +27,16 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        initFab();
+        initRecyclerView();
+    }
+
+    private void initFab() {
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -35,8 +45,12 @@ public class MainActivity extends AppCompatActivity
                         NewCategoryItemDialogFragment.TAG);
             }
         });
+    }
 
-        initRecyclerView();
+    @Override
+    protected void onResume() {
+        super.onResume();
+       // initRecyclerView();
     }
 
     @Override
@@ -62,12 +76,31 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void initRecyclerView() {
-        recyclerView = (RecyclerView)
-                findViewById(R.id.MainRecyclerView);
-        adapter = new CategoryAdapter();
+        recyclerView = (RecyclerView) findViewById(R.id.MainRecyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        setAdapter();
         loadItemsInBackground();
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
+    }
+
+    private void setAdapter() {
+        adapter = new CategoryAdapter(new OnCategorySelectedListener() {
+            @Override
+            public void onCategorySelected(String category) {
+                createIntent(category);
+            }
+        });
+    }
+
+    private void createIntent(String category) {
+        Intent showTodosIntent = new Intent();
+        showTodosIntent.setClass(CategoryActivity.this,
+                TodoActivity.class);
+        showTodosIntent.putExtra(
+                TodoActivity.EXTRA_CATEGORY_NAME, category);
+        startActivity(showTodosIntent);
     }
 
     private void loadItemsInBackground() {

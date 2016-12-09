@@ -1,4 +1,4 @@
-package com.example.annagujgiczer.leckefuzet;
+package com.example.annagujgiczer.leckefuzet.ui.categories;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -11,6 +11,9 @@ import android.support.v7.app.AppCompatDialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
+
+import com.example.annagujgiczer.leckefuzet.model.categories.CategoryItem;
+import com.example.annagujgiczer.leckefuzet.R;
 
 /**
  * Created by annagujgiczer on 2016/12/07.
@@ -64,10 +67,11 @@ public class NewCategoryItemDialogFragment extends AppCompatDialogFragment {
     }
 
     private CategoryItem getCategoryItem() {
-        CategoryItem CategoryItem = new CategoryItem();
-        CategoryItem.name = nameEditText.getText().toString();
-        CategoryItem.description = descriptionEditText.getText().toString();
-        return CategoryItem;
+        CategoryItem categoryItem = new CategoryItem();
+        categoryItem.name = nameEditText.getText().toString();
+        categoryItem.description = descriptionEditText.getText().toString();
+        categoryItem.save();
+        return categoryItem;
     }
 
     private View getContentView() {

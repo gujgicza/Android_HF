@@ -6,4 +6,8 @@
     <string name="new_category_item">Új kategória</string>
     <string name="ok">OK</string>
     <string name="cancel">Visszavonás</string>
+    <string name="remove">Törlés</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
