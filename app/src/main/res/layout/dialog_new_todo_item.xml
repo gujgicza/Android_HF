@@ -8,21 +8,10 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/categoryName" />
+        android:text="@string/todoName" />
 
     <EditText
-        android:id="@+id/CategoryItemNameEditText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dip"
-        android:text="@string/description" />
-
-    <EditText
-        android:id="@+id/CategoryItemDescriptionEditText"
+        android:id="@+id/TodoItemNameEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 

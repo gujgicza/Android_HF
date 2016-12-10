@@ -23,7 +23,7 @@
 
         <meta-data
             android:name="DATABASE"
-            android:value="homework_list.db" />
+            android:value="homework_list2.db" />
         <meta-data
             android:name="VERSION"
             android:value="3" />

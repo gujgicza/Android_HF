@@ -88,18 +88,20 @@ public class CategoryActivity extends AppCompatActivity
     private void setAdapter() {
         adapter = new CategoryAdapter(new OnCategorySelectedListener() {
             @Override
-            public void onCategorySelected(String category) {
+            public void onCategorySelected(CategoryItem category) {
                 createIntent(category);
             }
         });
     }
 
-    private void createIntent(String category) {
+    private void createIntent(CategoryItem category) {
         Intent showTodosIntent = new Intent();
         showTodosIntent.setClass(CategoryActivity.this,
                 TodoActivity.class);
         showTodosIntent.putExtra(
                 TodoActivity.EXTRA_CATEGORY_NAME, category);
+        showTodosIntent.putExtra(TodoActivity.CATEGORY_ID, category.getId());
+        //Long x = category.getId();
         startActivity(showTodosIntent);
     }
 

@@ -68,7 +68,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
                 @Override
                 public void onClick(View view) {
                     if (selectedListener != null) {
-                        selectedListener.onCategorySelected(categories.get(position).name);
+                        selectedListener.onCategorySelected(categories.get(position));
                     }
                 }
             });
