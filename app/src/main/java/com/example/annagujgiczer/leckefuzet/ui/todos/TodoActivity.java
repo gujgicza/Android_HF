@@ -1,21 +1,25 @@
 package com.example.annagujgiczer.leckefuzet.ui.todos;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.BoolRes;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.example.annagujgiczer.leckefuzet.AlarmReceiver;
 import com.example.annagujgiczer.leckefuzet.R;
 import com.example.annagujgiczer.leckefuzet.model.categories.CategoryItem;
 import com.example.annagujgiczer.leckefuzet.model.todos.TodoItem;
 
-import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -29,6 +33,8 @@ public class TodoActivity extends AppCompatActivity implements NewTodoItemDialog
     public static final String CATEGORY_ID = "extra.category_id";
     private CategoryItem category;
 
+    private PendingIntent pendingIntent;
+
     private RecyclerView recyclerView;
     private TodoAdapter adapter;
 
@@ -40,6 +46,9 @@ public class TodoActivity extends AppCompatActivity implements NewTodoItemDialog
         Intent i = getIntent();
         category = (CategoryItem) i.getSerializableExtra(EXTRA_CATEGORY_NAME);
         category.setId(i.getLongExtra(CATEGORY_ID, -1));
+
+        setTitle(category.name);
+
         initFab();
         initRecyclerView();
     }
@@ -98,8 +107,13 @@ public class TodoActivity extends AppCompatActivity implements NewTodoItemDialog
     }
 
     @Override
-    public void onTodoItemCreated(TodoItem newItem) {
-        //category.todos.add(newItem);
+    public void onTodoItemCreated(TodoItem newItem, Calendar calendar) {
         adapter.addTodo(newItem);
+
+        Intent myIntent = new Intent(TodoActivity.this, AlarmReceiver.class);
+        pendingIntent = PendingIntent.getBroadcast(TodoActivity.this, 0, myIntent,0);
+
+        AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
+        alarmManager.set(AlarmManager.RTC, calendar.getTimeInMillis(), pendingIntent);
     }
 }

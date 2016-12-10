@@ -86,7 +86,7 @@ public class CategoryActivity extends AppCompatActivity
     }
 
     private void setAdapter() {
-        adapter = new CategoryAdapter(new OnCategorySelectedListener() {
+        adapter = new CategoryAdapter(recyclerView, new OnCategorySelectedListener() {
             @Override
             public void onCategorySelected(CategoryItem category) {
                 createIntent(category);

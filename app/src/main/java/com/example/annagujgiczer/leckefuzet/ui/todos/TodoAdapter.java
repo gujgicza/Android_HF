@@ -1,16 +1,22 @@
 package com.example.annagujgiczer.leckefuzet.ui.todos;
 
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.example.annagujgiczer.leckefuzet.R;
 import com.example.annagujgiczer.leckefuzet.model.todos.TodoItem;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -33,11 +39,32 @@ public class TodoAdapter extends RecyclerView.Adapter <TodoAdapter.TodoViewHolde
     }
 
     @Override
-    public void onBindViewHolder(TodoViewHolder holder, int position) {
+    public void onBindViewHolder(TodoViewHolder holder, final int position) {
 
         TodoItem todo = todos.get(position);
-        //holder.position = position;
+        holder.position = position;
         holder.nameTextView.setText(todo.name);
+        holder.hasDoneCheckBox.setChecked(todo.hasDone);
+        holder.deadlineTextView.setText(todo.deadline);
+        formatTextView(holder.nameTextView, todo.hasDone);
+
+        holder.removeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                removeTodo(position);
+            }
+        });
+    }
+
+    private void formatTextView(TextView nameTextView, boolean hasDone) {
+        if(hasDone) {
+            nameTextView.setTextColor(Color.GRAY);
+            nameTextView.setPaintFlags(nameTextView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+        }
+        else {
+            nameTextView.setTextColor(Color.DKGRAY);
+            nameTextView.setPaintFlags(0);
+        }
     }
 
     @Override
@@ -46,13 +73,33 @@ public class TodoAdapter extends RecyclerView.Adapter <TodoAdapter.TodoViewHolde
     }
 
     public class TodoViewHolder extends RecyclerView.ViewHolder {
-        //int position; // TODO: szerkesztéshez jó lehet még
+        int position;
         TextView nameTextView;
+        TextView deadlineTextView;
+        CheckBox hasDoneCheckBox;
+        Button removeButton;
 
         public TodoViewHolder(View itemView) {
             super(itemView);
             nameTextView = (TextView) itemView.findViewById(R.id.TodoItemNameTextView);
+            hasDoneCheckBox = (CheckBox) itemView.findViewById(R.id.TodoItemCheckBox);
+            deadlineTextView = (TextView) itemView.findViewById(R.id.TodoItemDeadlineTextView);
+            removeButton = (Button) itemView.findViewById(R.id.TodoItemRemoveButton);
+
+            hasDoneCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    updateTodoItem(position, nameTextView, isChecked);
+                }
+            });
         }
+    }
+
+    private void updateTodoItem(int position, TextView nameTextView, boolean isChecked) {
+        TodoItem todo = todos.get(position);
+        todo.hasDone = isChecked;
+        todo.save();
+        formatTextView(nameTextView,  isChecked);
     }
 
     public void addTodo(TodoItem todo) {
@@ -62,6 +109,7 @@ public class TodoAdapter extends RecyclerView.Adapter <TodoAdapter.TodoViewHolde
 
     public void update(List<TodoItem> todoItems) {
         todos.clear();
+        Collections.sort(todoItems, new TodoComparator());
         todos.addAll(todoItems);
         notifyDataSetChanged();
     }
@@ -71,6 +119,17 @@ public class TodoAdapter extends RecyclerView.Adapter <TodoAdapter.TodoViewHolde
         notifyItemRemoved(position);
         if (position < todos.size()) {
             notifyItemRangeChanged(position, todos.size() - position);
+        }
+    }
+
+    private class TodoComparator implements Comparator<TodoItem> {
+        @Override
+        public int compare(TodoItem todo1, TodoItem todo2) {
+            if (todo1.hasDone)
+                return 1;
+            else if (todo2.hasDone)
+                return -1;
+            return 0;
         }
     }
 }

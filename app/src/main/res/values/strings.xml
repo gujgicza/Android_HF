@@ -6,8 +6,9 @@
     <string name="new_category_item">Új kategória</string>
     <string name="ok">OK</string>
     <string name="cancel">Visszavonás</string>
-    <string name="remove">Törlés</string>
+    <string name="remove">x</string>
 
     <string name="new_todo_item">Új házi felvétele</string>
     <string name="todoName">Házi</string>
+    <string name="new_deadline">Határidő</string>
 </resources>

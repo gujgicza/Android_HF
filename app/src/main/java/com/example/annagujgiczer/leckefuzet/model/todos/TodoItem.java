@@ -10,6 +10,8 @@ import com.orm.SugarRecord;
 public class TodoItem extends SugarRecord {
 
     public String name;
+    public Boolean hasDone;
+    public String deadline;
 
     public CategoryItem category;
 

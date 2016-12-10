@@ -1,6 +1,9 @@
 package com.example.annagujgiczer.leckefuzet.ui.categories;
 
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
+import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,10 +24,12 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
 
     private final List<CategoryItem> categories;
     private OnCategorySelectedListener selectedListener;
+    private RecyclerView recyclerView;
 
-    public CategoryAdapter(OnCategorySelectedListener selectedListener) {
+    public CategoryAdapter(RecyclerView recyclerView, OnCategorySelectedListener selectedListener) {
         categories = new ArrayList<>();
         this.selectedListener = selectedListener;
+        this.recyclerView = recyclerView;
     }
 
     @Override
@@ -35,12 +40,33 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
     }
 
     @Override
-    public void onBindViewHolder(CategoryViewHolder holder, int position) {
+    public void onBindViewHolder(CategoryViewHolder holder, final int position) {
 
         CategoryItem category = categories.get(position);
         holder.position = position;
         holder.nameTextView.setText(category.name);
         holder.descriptionTextView.setText(category.description);
+        holder.removeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Snackbar
+                        .make(recyclerView, "Biztosan törölni akarod?", Snackbar.LENGTH_LONG)
+                        .setAction("Nem", new View.OnClickListener() {
+
+                            @Override
+                            public void onClick(View v) {
+
+                            }
+                        })
+                        .setAction("Igen", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                removeCategory(position);
+                            }
+                        })
+                        .show();
+            }
+        });
     }
 
     @Override

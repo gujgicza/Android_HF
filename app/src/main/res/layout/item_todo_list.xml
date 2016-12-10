@@ -15,6 +15,7 @@
         android:orientation="horizontal">
 
         <CheckBox
+            android:id="@+id/TodoItemCheckBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
@@ -33,12 +34,20 @@
                 tools:text="Házi feladat" />
 
             <TextView
-                android:id="@+id/CategoryItemNameTextView"
+                android:id="@+id/TodoItemDeadlineTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 tools:text="Dátum" />
 
         </LinearLayout>
+
+        <Button
+            android:id="@+id/TodoItemRemoveButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/remove"
+            android:textColor="@color/grey_light"
+            android:background="@android:color/transparent"/>
 
     </LinearLayout>
 

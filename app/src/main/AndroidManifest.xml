@@ -21,12 +21,17 @@
         </activity>
         <activity android:name=".ui.todos.TodoActivity" ></activity>
 
+        <service android:name=".AlarmService"
+            android:enabled="true" />
+
+        <receiver android:name=".AlarmReceiver"/>
+
         <meta-data
             android:name="DATABASE"
-            android:value="homework_list2.db" />
+            android:value="todo2.db" />
         <meta-data
             android:name="VERSION"
-            android:value="3" />
+            android:value="5" />
         <meta-data
             android:name="QUERY_LOG"
             android:value="true" />
