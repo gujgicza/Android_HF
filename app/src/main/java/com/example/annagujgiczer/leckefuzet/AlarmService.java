@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.os.IBinder;
 
 import com.example.annagujgiczer.leckefuzet.ui.categories.CategoryActivity;
-import com.example.annagujgiczer.leckefuzet.ui.todos.TodoActivity;
 
 /**
  * Created by annagujgiczer on 2016/12/10.
@@ -45,13 +44,13 @@ public class AlarmService extends Service {
 
         Notification.Builder builder = new Notification.Builder(AlarmService.this);
 
-        builder.setSmallIcon(R.drawable.notification_template_icon_bg).setContentTitle("Határidő közeledik!").setContentIntent(pendingNotificationIntent);
+        builder.setSmallIcon(R.drawable.notif_icon).setContentTitle("Határidő közeledik!").setContentIntent(pendingNotificationIntent);
 
         NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         Notification notification = builder.getNotification();
 
 
-        notificationManager.notify(R.drawable.notification_template_icon_bg, notification);
+        notificationManager.notify(R.drawable.notif_icon, notification);
     }
 
     @Override
