@@ -3,7 +3,6 @@ package com.example.annagujgiczer.leckefuzet.ui.todos;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -12,7 +11,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewParent;
 
 import com.example.annagujgiczer.leckefuzet.AlarmReceiver;
 import com.example.annagujgiczer.leckefuzet.R;
@@ -28,7 +26,6 @@ import java.util.List;
 
 public class TodoActivity extends AppCompatActivity implements NewTodoItemDialogFragment.INewTodoItemDialogListener {
 
-    private static final String TAG = "TodoActivity";
     public static final String EXTRA_CATEGORY_NAME = "extra.category_name";
     public static final String CATEGORY_ID = "extra.category_id";
     private CategoryItem category;
@@ -81,7 +78,6 @@ public class TodoActivity extends AppCompatActivity implements NewTodoItemDialog
             @Override
             protected List<TodoItem> doInBackground(Void... voids) {
                 return category.getTodos();
-                //return TodoItem.find(TodoItem.class, "category = ?", String.valueOf(category.getId()));
             }
 
             @Override
@@ -115,6 +111,7 @@ public class TodoActivity extends AppCompatActivity implements NewTodoItemDialog
         pendingIntent = PendingIntent.getBroadcast(TodoActivity.this, 0, myIntent,0);
 
         AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
+
         // Alarm one day before
         calendar.add(Calendar.DATE, -1);
         long dayBefore = calendar.getTimeInMillis();

@@ -18,6 +18,10 @@ import com.example.annagujgiczer.leckefuzet.ui.todos.TodoActivity;
 
 import java.util.List;
 
+/**
+ * Created by annagujgiczer on 2016/12/07.
+ */
+
 public class CategoryActivity extends AppCompatActivity
         implements NewCategoryItemDialogFragment.INewCategoryItemDialogListener {
 
@@ -50,24 +54,18 @@ public class CategoryActivity extends AppCompatActivity
     @Override
     protected void onResume() {
         super.onResume();
-       // initRecyclerView();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
@@ -101,7 +99,6 @@ public class CategoryActivity extends AppCompatActivity
         showTodosIntent.putExtra(
                 TodoActivity.EXTRA_CATEGORY_NAME, category);
         showTodosIntent.putExtra(TodoActivity.CATEGORY_ID, category.getId());
-        //Long x = category.getId();
         startActivity(showTodosIntent);
     }
 

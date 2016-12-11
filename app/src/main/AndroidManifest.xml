@@ -19,16 +19,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.todos.TodoActivity" ></activity>
+        <activity android:name=".ui.todos.TodoActivity"></activity>
 
-        <service android:name=".AlarmService"
+        <service
+            android:name=".AlarmService"
             android:enabled="true" />
 
-        <receiver android:name=".AlarmReceiver"/>
+        <receiver android:name=".AlarmReceiver" />
 
         <meta-data
             android:name="DATABASE"
-            android:value="todo2.db" />
+            android:value="leckefuzet.db" />
         <meta-data
             android:name="VERSION"
             android:value="5" />

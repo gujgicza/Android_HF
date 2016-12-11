@@ -54,24 +54,28 @@ public class TodoAdapter extends RecyclerView.Adapter <TodoAdapter.TodoViewHolde
         holder.removeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Snackbar
-                        .make(recyclerView, "Biztosan törölni akarod?", Snackbar.LENGTH_LONG)
-                        .setAction("Nem", new View.OnClickListener() {
-
-                            @Override
-                            public void onClick(View v) {
-
-                            }
-                        })
-                        .setAction("Igen", new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                removeTodo(position);
-                            }
-                        })
-                        .show();
+                sureDeleteTodoSnack(position);
             }
         });
+    }
+
+    private void sureDeleteTodoSnack(final int position) {
+        Snackbar
+                .make(recyclerView, R.string.sure_want_to_delete, Snackbar.LENGTH_LONG)
+                .setAction(R.string.no, new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                })
+                .setAction(R.string.yes, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        removeTodo(position);
+                    }
+                })
+                .show();
     }
 
     private void formatTextView(TextView nameTextView, boolean hasDone) {

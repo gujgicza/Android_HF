@@ -10,7 +10,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatDialogFragment;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -23,8 +22,10 @@ import com.example.annagujgiczer.leckefuzet.model.categories.CategoryItem;
 import com.example.annagujgiczer.leckefuzet.model.todos.TodoItem;
 
 import java.util.Calendar;
-import java.util.Date;
 
+/**
+ * Created by annagujgiczer on 2016/12/07.
+ */
 
 public class NewTodoItemDialogFragment extends AppCompatDialogFragment implements View.OnClickListener {
 
@@ -77,12 +78,7 @@ public class NewTodoItemDialogFragment extends AppCompatDialogFragment implement
                     @Override
                     public void onClick(View v) {
                         if (isValid()) {
-                            dateTime.set(Calendar.YEAR, mYear);
-                            dateTime.set(Calendar.MONTH, mMonth);
-                            dateTime.set(Calendar.DAY_OF_MONTH, mDay);
-                            dateTime.set(Calendar.HOUR_OF_DAY, mHour);
-                            dateTime.set(Calendar.MINUTE, mMinute);
-
+                            setDateTime();
                             newTodoListener.onTodoItemCreated(getTodoItem(), dateTime);
                             dialog.dismiss();
                         }
@@ -93,20 +89,28 @@ public class NewTodoItemDialogFragment extends AppCompatDialogFragment implement
         return dialog;
     }
 
+    private void setDateTime() {
+        dateTime.set(Calendar.YEAR, mYear);
+        dateTime.set(Calendar.MONTH, mMonth);
+        dateTime.set(Calendar.DAY_OF_MONTH, mDay);
+        dateTime.set(Calendar.HOUR_OF_DAY, mHour);
+        dateTime.set(Calendar.MINUTE, mMinute);
+    }
+
 
     private boolean isValid() {
         boolean valid = true;
         if (nameEditText.getText().length() == 0) {
             valid = false;
-            nameEditText.setError("Adj meg nevet!");
+            nameEditText.setError(getString(R.string.err_name_missing));
         }
         if (dateText.getText().length() == 0) {
             valid = false;
-            dateText.setError("Adj meg dátumot!");
+            dateText.setError(getString(R.string.err_date_missing));
         }
         if (timeText.getText().length() == 0) {
             valid = false;
-            timeText.setError("Adj meg időpontot!");
+            timeText.setError(getString(R.string.err_time_missing));
         }
         return valid;
     }

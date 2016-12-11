@@ -1,9 +1,7 @@
 package com.example.annagujgiczer.leckefuzet.ui.categories;
 
-import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,24 +48,28 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
         holder.removeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Snackbar
-                        .make(recyclerView, "Biztosan törölni akarod?", Snackbar.LENGTH_LONG)
-                        .setAction("Nem", new View.OnClickListener() {
-
-                            @Override
-                            public void onClick(View v) {
-
-                            }
-                        })
-                        .setAction("Igen", new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                removeCategory(position);
-                            }
-                        })
-                        .show();
+                sureDeleteCategorySnack(position);
             }
         });
+    }
+
+    private void sureDeleteCategorySnack(final int position) {
+        Snackbar
+                .make(recyclerView, R.string.sure_want_to_delete, Snackbar.LENGTH_LONG)
+                .setAction(R.string.no, new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                })
+                .setAction(R.string.yes, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        removeCategory(position);
+                    }
+                })
+                .show();
     }
 
     @Override

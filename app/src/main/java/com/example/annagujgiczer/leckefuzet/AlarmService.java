@@ -15,19 +15,13 @@ import com.example.annagujgiczer.leckefuzet.ui.categories.CategoryActivity;
 
 public class AlarmService extends Service {
 
-    private NotificationManager mManager;
-
     @Override
-    public IBinder onBind(Intent arg0)
-    {
-        // TODO Auto-generated method stub
+    public IBinder onBind(Intent arg0) {
         return null;
     }
 
     @Override
-    public void onCreate()
-    {
-        // TODO Auto-generated method stub
+    public void onCreate() {
         super.onCreate();
     }
 
@@ -44,7 +38,7 @@ public class AlarmService extends Service {
 
         Notification.Builder builder = new Notification.Builder(AlarmService.this);
 
-        builder.setSmallIcon(R.drawable.notif_icon).setContentTitle("Határidő közeledik!").setContentIntent(pendingNotificationIntent);
+        builder.setSmallIcon(R.drawable.notif_icon).setContentTitle(getString(R.string.notif_message)).setContentIntent(pendingNotificationIntent);
 
         NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         Notification notification = builder.getNotification();
@@ -54,9 +48,7 @@ public class AlarmService extends Service {
     }
 
     @Override
-    public void onDestroy()
-    {
-        // TODO Auto-generated method stub
+    public void onDestroy() {
         super.onDestroy();
     }
 }
