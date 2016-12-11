@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.example.annagujgiczer.leckefuzet.model.categories.CategoryItem;
 import com.example.annagujgiczer.leckefuzet.R;
+import com.example.annagujgiczer.leckefuzet.model.todos.TodoItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -113,7 +114,10 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
     }
 
     public void removeCategory(int position) {
-        categories.remove(position);
+        CategoryItem removed = categories.remove(position);
+        for (TodoItem todo: removed.getTodos())
+            todo.delete();
+        removed.delete();
         notifyItemRemoved(position);
         if (position < categories.size()) {
             notifyItemRangeChanged(position, categories.size() - position);

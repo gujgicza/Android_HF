@@ -2,6 +2,7 @@ package com.example.annagujgiczer.leckefuzet.ui.todos;
 
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,8 +27,10 @@ import java.util.List;
 public class TodoAdapter extends RecyclerView.Adapter <TodoAdapter.TodoViewHolder> {
 
     private final List<TodoItem> todos;
+    private RecyclerView recyclerView;
 
-    public TodoAdapter() {
+    public TodoAdapter(RecyclerView recyclerView) {
+        this.recyclerView = recyclerView;
         todos = new ArrayList<>();
     }
 
@@ -51,7 +54,22 @@ public class TodoAdapter extends RecyclerView.Adapter <TodoAdapter.TodoViewHolde
         holder.removeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                removeTodo(position);
+                Snackbar
+                        .make(recyclerView, "Biztosan törölni akarod?", Snackbar.LENGTH_LONG)
+                        .setAction("Nem", new View.OnClickListener() {
+
+                            @Override
+                            public void onClick(View v) {
+
+                            }
+                        })
+                        .setAction("Igen", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                removeTodo(position);
+                            }
+                        })
+                        .show();
             }
         });
     }
@@ -115,7 +133,8 @@ public class TodoAdapter extends RecyclerView.Adapter <TodoAdapter.TodoViewHolde
     }
 
     public void removeTodo(int position) {
-        todos.remove(position);
+        TodoItem removed = todos.remove(position);
+        removed.delete();
         notifyItemRemoved(position);
         if (position < todos.size()) {
             notifyItemRangeChanged(position, todos.size() - position);

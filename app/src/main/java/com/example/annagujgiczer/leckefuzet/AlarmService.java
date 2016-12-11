@@ -7,6 +7,7 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 
+import com.example.annagujgiczer.leckefuzet.ui.categories.CategoryActivity;
 import com.example.annagujgiczer.leckefuzet.ui.todos.TodoActivity;
 
 /**
@@ -39,27 +40,18 @@ public class AlarmService extends Service {
     }
 
     void handleStart(Intent intent, int startId) {
-
-        //mManager = (NotificationManager) this.getApplicationContext().getSystemService(this.getApplicationContext().NOTIFICATION_SERVICE);
-        Intent notificationIntent = new Intent(this.getApplicationContext(),TodoActivity.class);
+        Intent notificationIntent = new Intent(this.getApplicationContext(),CategoryActivity.class);
         PendingIntent pendingNotificationIntent = PendingIntent.getActivity( this.getApplicationContext(),0, notificationIntent,PendingIntent.FLAG_UPDATE_CURRENT);
 
         Notification.Builder builder = new Notification.Builder(AlarmService.this);
 
-        builder.setSmallIcon(R.drawable.notification_template_icon_bg).setContentTitle("This is a test message!").setContentIntent(pendingNotificationIntent);
+        builder.setSmallIcon(R.drawable.notification_template_icon_bg).setContentTitle("Határidő közeledik!").setContentIntent(pendingNotificationIntent);
 
         NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         Notification notification = builder.getNotification();
 
+
         notificationManager.notify(R.drawable.notification_template_icon_bg, notification);
-
-        //Notification notification = new Notification(R.drawable.ic_add_white_36dp,"This is a test message!", System.currentTimeMillis());
-        //notificationIntent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP| Intent.FLAG_ACTIVITY_CLEAR_TOP);
-
-        //notification.flags |= Notification.FLAG_AUTO_CANCEL;
-        //notification.setLatestEventInfo(this.getApplicationContext(), "AlarmManagerDemo", "This is a test message!", pendingNotificationIntent);
-
-        //mManager.notify(0, notification);
     }
 
     @Override

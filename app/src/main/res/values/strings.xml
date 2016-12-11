@@ -11,4 +11,5 @@
     <string name="new_todo_item">Új házi felvétele</string>
     <string name="todoName">Házi</string>
     <string name="new_deadline">Határidő</string>
+    <string name="deadline">Határidő</string>
 </resources>

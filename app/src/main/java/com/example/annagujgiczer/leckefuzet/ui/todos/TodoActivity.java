@@ -3,15 +3,16 @@ package com.example.annagujgiczer.leckefuzet.ui.todos;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.annotation.BoolRes;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewParent;
 
 import com.example.annagujgiczer.leckefuzet.AlarmReceiver;
 import com.example.annagujgiczer.leckefuzet.R;
@@ -19,7 +20,6 @@ import com.example.annagujgiczer.leckefuzet.model.categories.CategoryItem;
 import com.example.annagujgiczer.leckefuzet.model.todos.TodoItem;
 
 import java.util.Calendar;
-import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -69,7 +69,7 @@ public class TodoActivity extends AppCompatActivity implements NewTodoItemDialog
         recyclerView = (RecyclerView) findViewById(R.id.TodoRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        adapter = new TodoAdapter();
+        adapter = new TodoAdapter(recyclerView);
 
         loadItemsInBackground();
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -80,7 +80,8 @@ public class TodoActivity extends AppCompatActivity implements NewTodoItemDialog
         new AsyncTask<Void, Void, List<TodoItem>>() {
             @Override
             protected List<TodoItem> doInBackground(Void... voids) {
-                return TodoItem.find(TodoItem.class, "category = ?", String.valueOf(category.getId()));
+                return category.getTodos();
+                //return TodoItem.find(TodoItem.class, "category = ?", String.valueOf(category.getId()));
             }
 
             @Override
@@ -114,6 +115,9 @@ public class TodoActivity extends AppCompatActivity implements NewTodoItemDialog
         pendingIntent = PendingIntent.getBroadcast(TodoActivity.this, 0, myIntent,0);
 
         AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
-        alarmManager.set(AlarmManager.RTC, calendar.getTimeInMillis(), pendingIntent);
+        // Alarm one day before
+        calendar.add(Calendar.DATE, -1);
+        long dayBefore = calendar.getTimeInMillis();
+        alarmManager.set(AlarmManager.RTC, dayBefore, pendingIntent);
     }
 }

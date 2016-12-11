@@ -15,4 +15,8 @@ public class CategoryItem extends SugarRecord implements Serializable {
     public String name;
     public String description;
     public CategoryItem() {}
+
+    public List<TodoItem> getTodos() {
+        return TodoItem.find(TodoItem.class, "category = ?", String.valueOf(this.getId()));
+    }
 }
